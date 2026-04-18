@@ -1,26 +1,49 @@
-import React from 'react'
-import image from '../assets/image1.avif'
+import React, { useContext } from 'react'
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { dataContext } from '../context/UserContext';
 
-function Card2() {
+function Card2({ item }) {
+  const { removeFromCart, updateQuantity } = useContext(dataContext);
+
+  if (!item) return null;
+
   return (
-    <div className='w-full h-[120px] p-2 flex justify-between'>
-      <div className='w-[60%] h-full flex gap-5'>
-        <div className='w-[50%] h-full overflow-hidden rounded-lg'>
-            <img src={image} alt="" className=' object-cover'/>
-        </div>
-        <div className='w-[40%] h-full flex flex-col gap-5'>
-            <div className='text-lg text-gray-600 font-semibold'>Pancake</div>
-            <div className='w-[110] h-[50px] bg-slate-400 flex rounded-lg overflow-hidden shadow-lg text-red-400 font-semibold border-2 border-red-400 text-xl'>
-                <button className='w-[30%] h-full bg-white flex items-center justify-center hover:bg-gray-200'>-</button>
-                <span className='w-[40%] h-full bg-slate-300 flex items-center justify-center'>1</span>
-                <button className='w-[30%] h-full bg-white flex items-center justify-center hover:bg-gray-200'>+</button>
-            </div>
-        </div>
+    <div className='w-full p-4 flex gap-4 bg-white rounded-2xl shadow-sm mb-4 border border-gray-50 hover:border-red-100 transition-all group'>
+      <div className='w-24 h-24 overflow-hidden rounded-xl bg-gray-50 flex-shrink-0'>
+          <img src={item.food_image} alt={item.food_name} className='w-full h-full object-cover transition-transform group-hover:scale-110 duration-500'/>
       </div>
-      <div className='flex flex-col justify-start items-end gap-6'>
-        <span className='text-xl text-red-400 font-semibold'>499/-</span>
-        <RiDeleteBin4Line className='w-[30px] h-[30px] text-slate-400'/>
+      <div className='flex-1 flex flex-col justify-between py-0.5'>
+          <div className='flex justify-between items-start'>
+            <div className='text-sm text-gray-400 font-bold uppercase tracking-wider mb-1'>{item.food_category}</div>
+            <button 
+              onClick={() => removeFromCart(item.id)}
+              className='p-1.5 hover:bg-red-50 rounded-lg transition-colors text-gray-300 hover:text-red-500'
+            >
+              <RiDeleteBin4Line className='w-5 h-5'/>
+            </button>
+          </div>
+          <div className='text-lg text-gray-900 font-extrabold line-clamp-1 mb-2 leading-none'>{item.food_name}</div>
+          
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center bg-gray-100 rounded-xl px-1 py-1 border border-gray-200'>
+                <button 
+                  className='w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all text-red-500 font-black'
+                  onClick={() => updateQuantity(item.id, -1)}
+                >
+                  −
+                </button>
+                <span className='w-10 text-center font-black text-gray-800 text-sm'>{item.food_quantity}</span>
+                <button 
+                  className='w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-all text-red-500 font-black'
+                  onClick={() => updateQuantity(item.id, 1)}
+                >
+                  +
+                </button>
+            </div>
+            <div className='text-xl text-red-500 font-black'>
+              Rs {item.price * item.food_quantity}
+            </div>
+          </div>
       </div>
     </div>
   )
