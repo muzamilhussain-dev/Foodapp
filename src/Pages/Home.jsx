@@ -47,11 +47,11 @@ function Home() {
       <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center">
         {input === '' ? (
           <div className='w-full flex justify-center py-10 px-4'>
-            <div className='grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap justify-center gap-6 w-full'>
-              {Category.map((item) => (
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 justify-center gap-6 w-full'>
+              {Category.map((item, index) => (
                 <div
                   key={item.id}
-                  className='bg-white flex flex-col items-center justify-center gap-3 p-5 text-[18px] font-bold text-red-500 rounded-2xl shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-transparent min-w-[120px] lg:w-[140px] h-[140px] lg:h-[150px]'
+                  className={`bg-white flex flex-col items-center justify-center gap-3 p-5 text-[18px] font-bold text-red-500 rounded-2xl shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-transparent min-w-[120px] h-[140px] lg:h-[150px] ${index === Category.length - 1 ? "col-span-2 sm:col-span-1 md:col-span-1" : ""}`}
                   onClick={() => filter(item.name)}
                 >
                   <div className='text-3xl lg:text-4xl transition-colors duration-300'>{item.icon}</div>
